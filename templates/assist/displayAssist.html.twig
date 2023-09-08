@@ -1,0 +1,153 @@
+{# templates/assist/index.html.twig #}
+
+{% extends 'base1.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="container-fluid">
+            <h1 class="mb-4">Assist List</h1>
+            <br/>
+            <br/>
+
+            {# Display success flash message if available #}
+            {% for message in app.flashes('danger') %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+
+            <div class="sidebar-search" >
+                <div class="input-group custom-search-form">
+                    <input    type="text" id="search" class="form-control" placeholder="Rchercher par question" style="width: 1180px;">
+                </div>
+                <br>
+                <!-- /input-group -->
+                <ul class="nav" id="side-menu">
+                    <li>
+                        <a href="#"> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level" id="entitiesNav">
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="row">
+                {% for assist in assists %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ assist.question }}</h5>
+                                <p class="card-text">{{ assist.reponse }}</p>
+                                <p class="card-text"><small class="text-muted">{{ assist.dateAssist|date('Y-m-d') }}</small></p>
+                                <a href="{{ path('assist_show', { 'id': assist.id }) }}" class="btn btn-primary">Show</a>
+                                <a href="{{ path('assist_edit', { 'id': assist.id }) }}" class="btn btn-secondary">Edit</a>
+                                <a href="{{ path('assist_delete', { 'id': assist.id }) }}" class="btn btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <nav aria-label="Page navigation">
+                        <style>
+                            .pagination-section {
+                                margin-top: 20px;
+                            }
+
+                            .pagination-section .pagination {
+                                justify-content: center;
+                            }
+
+                            .pagination-section .page-item.disabled .page-link,
+                            .pagination-section .page-item.active .page-link {
+                                background-color: #007bff;
+                                border-color: #007bff;
+                                color: #fff;
+                            }
+
+                            .pagination-section .page-link {
+                                color: #007bff;
+                                background-color: transparent;
+                                border: 1px solid #007bff;
+                                padding: 6px 12px;
+                                border-radius: 4px;
+                            }
+
+                            .pagination-section .page-link:hover {
+                                background-color: #007bff;
+                                color: #fff;
+                                text-decoration: none;
+                            }
+                        </style>
+                        <ul class="pagination justify-content-center pagination-section">
+                            {{ knp_pagination_render(assists) }}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <a href="{{ path('assist_new') }}" class="btn btn-success mt-4">Create new</a>
+        </div>
+    </div>
+
+    <!-- jQuery is necessary -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            var searchRequest = null;
+            $("#search").keyup(function() {
+                var minlength = 3;
+                var that = this;
+                var value = $(this).val();
+                var entitySelector = $("#entitiesNav").html('');
+                if (value.length >= minlength ) {
+                    if (searchRequest != null)
+                        searchRequest.abort();
+                    searchRequest = $.ajax({
+                        type: "GET",
+                        url: "{{ path('ajax_search') }}",
+                        data: {
+                            'q' : value
+                        },
+                        dataType: "text",
+                        success: function(msg){
+                            //we need to check if the value is the same
+                            if (value==$(that).val()) {
+                                var result = JSON.parse(msg);
+                                $.each(result, function(key, arr) {
+                                    $.each(arr, function(id, value) {
+                                        if (key == 'entities') {
+                                            if (id != 'error') {
+                                                console.log(value[1])
+                                                // Create a card element with inline styles
+                                                var card = $('<div class="card">').css('padding', '10px');
+
+// Create a card body element with inline styles
+                                                var cardBody = $('<div class="card-body">').css('padding', '10px');
+
+// Append the items to the card body
+                                                cardBody.append('<li class="list-group-item">' + value[0] + '</li><br/>');
+                                                cardBody.append('<li class="list-group-item">' + value[1] + '</li>');
+
+// Append the card body to the card
+                                                card.append(cardBody);
+
+// Append the card to the entitySelector element
+                                                entitySelector.append(card);
+
+                                            } else {
+                                                entitySelector.append('<li class="errorLi">'+value+'</li>');
+                                            }
+                                        }
+                                    });
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

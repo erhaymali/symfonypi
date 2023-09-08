@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="container-fluid" style="background-color: white;">
+            <div class="row">
+                <div class="col-md-12 text-center mb-4 mt-5">
+                    <h3>Filtrer(descendent) par :</h3>
+                    <div class="btn-group">
+                                <th>Assist ID</th>
+                                <th>Date</th>
+                                <th>Sujet</th>
+                                <th>Contenu</th>
+                                <a href="{{ path('app_reclamation_display', {'sort': 'id', 'direction': 'desc'}) }}" class="btn btn-primary">ID</a>
+                                <a href="{{ path('app_reclamation_display', {'sort': 'sujet', 'direction': 'desc'}) }}" class="btn btn-primary">Subject</a>
+                                <a href="{{ path('app_reclamation_display', {'sort': 'dateRec', 'direction': 'desc'}) }}" class="btn btn-primary">Date</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Utilisateur ID</th>
+                                <th>État</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for reclamation in reclamations %}
+                                <tr>
+                                    <td>{{ reclamation.id }}</td>
+                                    <td>{{ reclamation.utilisateurId }}</td>
+                                    <td>{{ reclamation.assistId }}</td>
+                                    <td>{{ reclamation.dateRec | date('Y-m-d H:i:s') }}</td>
+                                    <td>{{ reclamation.sujet }}</td>
+                                    <td>{{ reclamation.contenu }}</td>
+                                    <td>{{ reclamation.etat }}</td>
+                                    <td>
+                                        <a href="{{ path('edit_reclamation', {'id': reclamation.id}) }}" class="btn btn-info"><i class="fas fa-pencil"></i> Edit</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ path('delete_reclamation', {'id': reclamation.id}) }}" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{# templates/assist/new.html.twig #}
+
+{% extends 'base1.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-4">Create Assist</h1>
+
+        <form class="mt-4" method="post">
+            {{ form_start(form) }}
+
+            <div class="mb-3">
+                <label class="form-label">Question</label>
+                {{ form_widget(form.question, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Response</label>
+                {{ form_widget(form.reponse, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Date</label>
+                {{ form_widget(form.dateAssist, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <button class="btn btn-primary" type="submit">Create</button>
+            {{ form_end(form) }}
+
+            <a class="btn btn-secondary mt-2" href="{{ path('list_assist') }}">Back to list</a>
+        </form>
+    </div>
+{% endblock %}

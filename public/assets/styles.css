@@ -1,0 +1,95 @@
+/* styles.css */
+
+/* Add your custom styles below */
+
+/* Change background color of the body */
+body {
+    background-color: #f8f9fa;
+}
+
+/* Style the navigation bar */
+.navbar {
+    background-color: #007bff;
+    border-bottom: 1px solid #ddd;
+}
+
+.navbar-brand {
+    color: #fff;
+    font-size: 1.5rem;
+}
+
+.navbar-nav .nav-link {
+    color: #fff;
+}
+
+/* Add spacing to the top of the main content */
+.container {
+    margin-top: 20px;
+}
+
+/* Style the header */
+h1 {
+    color: #333;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+/* Style the paragraph */
+p {
+    color: #666;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* Add space to the bottom of the page */
+footer {
+    margin-top: 40px;
+    padding: 20px 0;
+    background-color: #f8f9fa;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    color: #666;
+}
+
+/* Media query for small screens */
+@media (max-width: 576px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+}
+
+
+
+/* public/css/custom.css */
+
+/* Styling for pagination */
+.pagination {
+    margin-top: 20px;
+}
+
+.pagination .page-item {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.pagination .page-item.disabled .page-link,
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+}
+
+.pagination .page-link {
+    color: #007bff;
+    background-color: transparent;
+    border: 1px solid #007bff;
+    padding: 6px 12px;
+    border-radius: 4px;
+}
+
+/* Additional styling as needed */
+

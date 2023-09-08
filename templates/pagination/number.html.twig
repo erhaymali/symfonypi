@@ -1,0 +1,9 @@
+{# templates/pagination/number.html.twig #}
+
+{% if pageCount > 1 %}
+    {% for page in pagesInRange %}
+        <li class="page-item {% if page == current %}active{% endif %}">
+            <a class="page-link" href="{{ knp_pagination_filter(assists, {'page': page}) }}">{{ page }}</a>
+        </li>
+    {% endfor %}
+{% endif %}
