@@ -2,8 +2,7 @@
 
 namespace App\Controller;
 
-// src/Controller/ReclamationController.php
-namespace App\Controller;
+
 
 use App\Entity\Reclamation;
 use App\Form\ReclamationType;
